@@ -1,5 +1,6 @@
 help:
 	@echo "Tasks for local development:"
+	@echo "* build:                       Build Dockerfile and build firmware.bin with it"
 	@echo "* tests-single-ci:             Run a single test from inside the CI"
 	@echo "* tests-single-local:          Run a single test locally"
 	@echo "* tests-single-local-docker:   Run a single test locally, using docker-compose"
@@ -50,3 +51,8 @@ tests-all-local-docker:
 setup-local-docker:
 	docker-compose build
 .PHONY: setup-local-docker
+
+build:
+	docker build docker/ --tag marlin/platformio:latest
+	docker run -it -v .:/data:Z marlin/platformio:latest sh -c "cd /data && pio run"
+.PHONY: build
