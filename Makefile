@@ -63,3 +63,8 @@ $(PINS): %:
 	@echo "Formatting $@" && node $(SCRIPTS_DIR)/pinsformat.js $@
 
 format-pins: $(PINS)
+
+build:
+	podman build docker/ --tag marlin/platformio:latest
+	podman run -it -v .:/data:Z marlin/platformio:latest sh -c "cd /data && pio run"
+.PHONY: build
