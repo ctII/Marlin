@@ -66,5 +66,6 @@ format-pins: $(PINS)
 
 build:
 	podman build docker/ --tag marlin/platformio:latest
-	podman run -it -v .:/data:Z marlin/platformio:latest sh -c "cd /data && pio run"
+	mkdir -p .platformio
+	podman run -it -v .:/data:Z -v .platformio:/root/.platformio:Z marlin/platformio:latest sh -c "cd /data && pio run"
 .PHONY: build
